@@ -14,8 +14,8 @@ function getConfig(url) {
   };
 }
 
-function makeQueryAPICall(currentPage, setData, setErrorMsg, setIsLoading) {
-  const config = getConfig(`https://api.github.com/search/repositories?q=${document.getElementById('searchText').value}&sort=stars&order=desc&per_page=${ITEMS_PER_PAGE}&page=${currentPage}&accept=application/vnd.github.v3+json`);
+function makeQueryAPICall(searchTerm, currentPage, setData, setErrorMsg, setIsLoading) {
+  const config = getConfig(`https://api.github.com/search/repositories?q=${searchTerm}&sort=stars&order=desc&per_page=${ITEMS_PER_PAGE}&page=${currentPage}&accept=application/vnd.github.v3+json`);
   axios(config)
     .then((response) => {
       setIsLoading(false);

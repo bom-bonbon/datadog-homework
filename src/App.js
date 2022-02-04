@@ -14,6 +14,10 @@ function sanitizeQuery(str) {
   return str.replace(/[^\w. ]/gi, (c) => `&#${c.charCodeAt(0)};`);
 }
 
+function getSanitizeSearchTerm() {
+  return sanitizeQuery(document.getElementById('searchText').value);
+}
+
 export default function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [query, setQuery] = useState(null);
@@ -24,13 +28,12 @@ export default function App() {
   const onButtonClick = (targetPage) => {
     setErrorMsg(null);
     setIsLoading(true);
-    makeQueryAPICall(targetPage, setData, setErrorMsg, setIsLoading);
+    makeQueryAPICall(getSanitizeSearchTerm(), targetPage, setData, setErrorMsg, setIsLoading);
     setCurrentPage(targetPage);
   };
 
   const onSubmit = () => {
-    const sanitizedQuery = sanitizeQuery(document.getElementById('searchText').value);
-    setQuery(sanitizedQuery);
+    setQuery(getSanitizeSearchTerm());
     onButtonClick(FIRST_PAGE);
   };
 
